@@ -41,33 +41,10 @@ namespace Betriebsmittel.PrueffristenMonitor
             }
 
             Console.WriteLine("Datei gefunden");
-            DeviceRepository.Geraete(datenPfad);
+            Console.WriteLine(DeviceRepository.GetDevices(datenPfad));
 
         }
-        /// <summary>
-        /// Prüft, ob sich die angegebene .db-Datei erfolgreich als SQLite-Datenbank öffnen lässt.
-        /// </summary>
-        /// <param name="pfad">Dateipfad zur zu prüfenden .db-Datei.</param>
-        /// <returns>true, wenn die Datenbank erfolgreich geöffnet werden konnte; andernfalls false.</returns>
-        // public static bool DatenbankOeffnen(string pfad)
-        // {
-        //     try
-        //     {
-        //         string sqliteVerbindungsString = $"Data Source={pfad}";
-        //         using (SqliteConnection datenbankVerbindung = new SqliteConnection(sqliteVerbindungsString))
-        //         {
-        //             datenbankVerbindung.Open();
-        //             Console.WriteLine("Datenbank erfolgreich geöffnet");
-        //             return true;
-        //         }
-        //     }
-        //     catch
-        //     {
-        //         Console.WriteLine("Es kam zu einem Fehler");
-        //         return false;
-        //     }
 
-        // }
 
 
     }

@@ -1,13 +1,14 @@
 using Microsoft.Data.Sqlite;
+using System.Collections.Generic;
 namespace Betriebsmittel.PrueffristenMonitor
 {
     internal class DeviceRepository
     {
 
-        public static void Geraete(string pfad)
+        public static List<Device> GetDevices(string pfad)
         {
             // 1. Leere Liste anlegen
-            //List <Device> lGeraete = new List<Device>;
+            List<Device> lGeraete = new List<Device>();
             // 2. Verbindung zur Datenbank öffnen
             try
             {
@@ -19,7 +20,7 @@ namespace Betriebsmittel.PrueffristenMonitor
                     datenbankVerbindung.Open();
                     Console.WriteLine("Datenbank erfolgreich geöffnet");
 
-                    string sqlAbfrage = "SELECT * FROM Geraete";
+                    string sqlAbfrage = "SELECT Geraete_ID, Geraete_Bezeichnung, Geraete_Abteilung, Geraete_Pruefdatum, Geraete_Datum_Naechste_Pruefung, Geraete_Pruefintervall FROM Geraete";
                     //SQL-Auftrag
                     using (var command = new SqliteCommand(sqlAbfrage, datenbankVerbindung))
                     {
@@ -30,39 +31,64 @@ namespace Betriebsmittel.PrueffristenMonitor
                             while (device.Read())
                             {
 
-                                var geraeteID = device["Geraete_ID"];
+                                var vgeraeteID = device["Geraete_ID"];
                                 // Vorkonfigurierte Prüflinge überspringen
-                                if (geraeteID == DBNull.Value) continue;
-                                var geraeteBezeichnung = device["Geraete_Bezeichnung"];
-                                var geraeteAbteilung = device["Geraete_Abteilung"];
-                                var geraetePruefdatum = device["Geraete_Pruefdatum"];
-                                var geraeteDatumNaechstePruefung = device["Geraete_Datum_Naechste_Pruefung"];
-                                var geraetePruefintervall = device["Geraete_Pruefintervall"];
-                                Console.WriteLine($"ID: {geraeteID}, Bezeichung: {geraeteBezeichnung}, Abteilung: {geraeteAbteilung}, Prüfdatum: {geraetePruefdatum}, Nächste Prüfung: {geraeteDatumNaechstePruefung}, Prüfintervall: {geraetePruefintervall}");
+                                if (vgeraeteID == DBNull.Value) continue;
+                                string geraeteID = vgeraeteID.ToString() ?? "";
+
+                                string geraeteBezeichnung = device["Geraete_Bezeichnung"].ToString() ?? "";
+
+                                string geraeteAbteilung = device["Geraete_Abteilung"].ToString() ?? "";
+
+                                string sGeraetePruefdatum = device["Geraete_Pruefdatum"].ToString() ?? "";
+                                DateTime? geraetePruefdatum = null;
+                                if (sGeraetePruefdatum != "")
+                                {
+                                    geraetePruefdatum = DateTime.Parse(sGeraetePruefdatum);
+                                }
+
+                                string sGeraeteDatumNaechstePruefung = device["Geraete_Datum_Naechste_Pruefung"].ToString() ?? "";
+                                DateTime? geraeteDatumNaechstePruefung = null;
+                                if (sGeraeteDatumNaechstePruefung != "")
+                                {
+                                    geraeteDatumNaechstePruefung = DateTime.Parse(sGeraeteDatumNaechstePruefung);
+                                }
+
+                                string sgeraetePruefintervall = device["Geraete_Pruefintervall"].ToString() ?? "";
+
+                                int geraetePruefintervall = int.Parse(sgeraetePruefintervall);
+
+                                //Neues Device-Objekt erzeugen und der Liste hinzugefügt
+                                lGeraete.Add(new Device(
+                                    geraeteID,
+                                    geraeteBezeichnung,
+                                    geraeteAbteilung,
+                                    geraetePruefdatum,
+                                    geraeteDatumNaechstePruefung,
+                                    geraetePruefintervall));
                             }
                         }
                     }
 
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                Console.WriteLine("Es kam zu einem Fehler");
+                Console.WriteLine($"Es kam zu einem Fehler: {ex.Message}");
 
             }
 
 
 
 
+            return lGeraete;
 
 
 
-            // 5.1 Neues Device-Objekt erzeugen
-            // 5.2 Spaltenwerte aus der aktuellen Zeile lesen
-            // 5.3 Werte dem Device zuweisen
-            // 5.4 Device zur Liste hinzufügen
 
-            // 6. Liste zurückgeben
+
+
+
 
         }
 

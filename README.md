@@ -1,86 +1,50 @@
-# Benning ST760 DB Importer
+# Betriebsmittel Prüffristen Monitor
 
-*Entwicklung einer C#-Konsolenanwendung zur Auswertung von Benning-ST760-Datenbankdateien, um Geräteprüfungen zu identifizieren und insbesondere überfällige Prüfungen übersichtlich darzustellen.*
+C#-Konsolenanwendung zur Auswertung von Prüfdaten elektrischer Betriebsmittel aus einer Benning-ST760-Datenbankdatei (`.db`).
+
+Ziel des Projekts ist es, relevante Daten zu elektrischen Betriebsmitteln und deren Prüfterminen einzulesen, daraus den aktuellen Prüfstatus zu berechnen und fällige bzw. überfällige Prüfungen sichtbar zu machen.
 
 ---
 
 ## Projektbeschreibung
 
-Dieses Projekt ist eine Konsolenanwendung in C#, die Daten aus einer Benning-ST760-Datenbankdatei (`.db`) einliest und für die Prüfüberwachung auswertet.
+Dieses Projekt dient dazu, einen praxisnahen Anwendungsfall aus dem Bereich der Prüfung elektrischer Betriebsmittel DGUV V3 in C# umzusetzen.
 
-Ziel ist es, Geräte aus der Datenbank zu ermitteln und anzuzeigen, welche Prüfungen bereits überfällig sind, bald anstehen oder noch gültig sind.
+Die Anwendung liest Daten aus einer SQLite-Datenbank ein, verarbeitet relevante Informationen zu elektrischen Betriebsmitteln und deren Prüfungen und bewertet auf dieser Basis den aktuellen Prüfstatus.
 
-Die Anwendung richtet sich an den fachlichen Anwendungsfall, Prüfgerätedaten strukturiert auszulesen und in einer übersichtlichen Form bereitzustellen.
-
----
-
-## Disclaimer
-
-Dieses Projekt ist ein eigenständig entwickeltes Praxisprojekt, das ich im Rahmen meiner Bewerbung um ein Praktikum in der Anwendungsentwicklung nutze, um meine Arbeitsweise und meine bisherigen Kenntnisse nachvollziehbar aufzuzeigen.
-
-Ziel ist es, einen praxisnahen Anwendungsfall mit C# strukturiert zu entwickeln und dabei meine Kenntnisse im Umgang mit Datenbankdateien, Programmlogik und Projektaufbau zu vertiefen.
-
-KI nutze ich unterstützend in einer fachlich begleitenden Rolle, ähnlich einem Teamleiter oder Ausbilder. Die Unterstützung betrifft vor allem die Projektplanung, die Strukturierung der Arbeitsschritte, technische Erklärungen.
-
-Die Umsetzung des Codes und die inhaltliche Erarbeitung der Lösung erfolgen durch mich selbst.
-
----
-
-## Schritte der Entwicklung
-- Reihenfolge der Entwicklung
-- Die sinnvolle Reihenfolge ist aus meiner Sicht:
-- Pfad einlesen und prüfen
-- Datenbankverbindung testen
-- Tabellen und Spalten analysieren
-- Geräteabfrage bauen
-- Geräteklasse / Datenmodell bauen
-- Statuslogik ergänzen
-- Ausgabe verbessern
-- Fehlerbehandlung und Aufräumen
-
----
-
-## Funktionen
-
-- Einlesen einer `.db`-Datei über einen vom Benutzer eingegebenen Dateipfad
-- Aufbau einer Datenbankverbindung
-- Auslesen relevanter Gerätedaten
-- Bewertung des Prüfstatus anhand vorhandener Prüfdaten
-- Ausgabe einer Übersicht in der Konsole
-- Kennzeichnung von überfälligen Geräten
-
----
-
-## Geplante Ausgabe
-
-Die Anwendung soll unter anderem folgende Informationen anzeigen:
-
-- Inventarnummer
-- Gerätebezeichnung
-- Raum / Standort
-- letztes Prüfdatum
-- nächstes Prüfdatum
-- aktueller Status
-
-Beispiel für Statuswerte:
-
-- Gültig
-- Bald fällig
-- Überfällig
-- Nicht geprüft
-
----
-
-## Projektziel
-
-Das Projekt dient dazu, ein praxisnahes C#-Programm zu entwickeln, das einen realen betrieblichen Anwendungsfall abbildet: die Auswertung von Prüfdaten aus Benning-Datenbanken.
-
-Im Vordergrund stehen dabei:
+Im Mittelpunkt stehen dabei:
 
 - strukturierter Programmaufbau
 - Datenbankzugriff mit C#
-- Verarbeitung fachlicher Daten
-- saubere Trennung zwischen Datenzugriff, Logik und Ausgabe
+- Trennung von Datenmodell, Datenzugriff und Fachlogik
+- schrittweise Weiterentwicklung über klar definierte Meilensteine
+
+---
+
+## Aktueller Stand
+
+Aktuell umgesetzt sind:
+
+- Einlesen eines Dateipfads zur gewünschten `.db`-Datei
+- Prüfung, ob die angegebene Datei existiert und die Endung `.db` besitzt
+- Aufbau einer Verbindung zur Benning-Datenbank
+- Auslesen relevanter Daten aus der Tabelle `Geraete`
+- Erzeugen von `Device`-Objekten aus den eingelesenen Datensätzen
+- Berechnung des Prüfstatus über den `DeviceStatusService`
+- Ausgabe der eingelesenen Betriebsmittel- und Prüfinformationen in der Konsole
+
+---
+
+## Aktuelle Statuslogik
+
+Der Prüfstatus wird derzeit anhand des Datums der nächsten Prüfung bewertet.
+
+Aktuell werden folgende Statuswerte verwendet:
+
+- `nicht Geprüft`
+- `Prüfung Abgelaufen`
+- `Bald Prüfen`
+- `Geprüft`
 
 ---
 
@@ -88,56 +52,71 @@ Im Vordergrund stehen dabei:
 
 - C#
 - .NET
-- SQLite / Datenbankzugriff auf `.db`-Dateien
+- Microsoft.Data.Sqlite
+- SQLite / `.db`-Datenbankdateien
 - Konsolenanwendung
 
 ---
 
-## Projektstruktur (geplant)
+## Projektstruktur
 
-- `Program.cs` – Einstiegspunkt des Programms
-- `Device.cs` – Modell für ein Gerät
-- `DeviceRepository.cs` – Datenbankzugriff
-- `DeviceStatusService.cs` – Fachlogik zur Statusbewertung
-- `ConsoleOutputService.cs` – Ausgabe in der Konsole
+- `Program.cs` – Einstiegspunkt des Programms, Benutzereingabe und Konsolenausgabe
+- `Device.cs` – technisches Datenmodell für ein elektrisches Betriebsmittel mit relevanten Prüfinformationen
+- `DeviceRepository.cs` – Lesen der Betriebsmittel- und Prüfdaten aus der Datenbank
+- `DeviceStatusService.cs` – Fachlogik zur Bewertung des Prüfstatus
 
 ---
 
-## Geplanter Entwicklungsstand / Meilensteine
+## Entwicklungsstand / Meilensteine
 
-1. Dateipfad zur Datenbank einlesen
-2. Datenbankverbindung prüfen
-3. Tabellenstruktur analysieren
-4. Gerätedaten auslesen
-5. Prüfstatus berechnen
-6. Ergebnisse übersichtlich ausgeben
-7. Fehlerbehandlung und Dokumentation ergänzen
+1. Dateipfad zur Datenbank einlesen  
+2. Datenbankverbindung prüfen  
+3. Tabellenstruktur analysieren  
+4. Daten zu elektrischen Betriebsmitteln auslesen  
+5. Prüfstatus berechnen  
+6. Ergebnisse übersichtlich ausgeben  
+7. Fehlerbehandlung und Dokumentation ergänzen  
+
+**Aktueller Stand:** Meilenstein 5 abgeschlossen  
+**Nächster Schritt:** Meilenstein 6 – Ergebnisse übersichtlicher ausgeben
 
 ---
 
 ## Start der Anwendung
 
-Die Anwendung wird als Konsolenprogramm gestartet.  
+Die Anwendung wird als Konsolenprogramm gestartet.
+
 Nach dem Start gibt der Benutzer den Pfad zur gewünschten `.db`-Datei ein.
 
-Beispiel:
+Beispiel unter Windows:
 
-`/Users/Name/Documents/Benning/Datei.db`
+`C:\Users\<Benutzername>\Documents\Benning\FirmaXy.db`
 
-Anschließend liest das Programm die Datenbank ein und erstellt eine Auswertung.
+Beispiel unter macOS:
+
+`/Users/<Benutzername>/Documents/Benning/FirmaXy.db`
+
+Anschließend werden die Daten eingelesen, der Prüfstatus berechnet und die Ergebnisse in der Konsole ausgegeben.
+
+---
+
+## Projektziel
+
+Das Projekt soll einen realen fachlichen Anwendungsfall aus dem Bereich der Prüfung elektrischer Betriebsmittel in ein strukturiertes C#-Programm überführen.
+
+Neben der eigentlichen Funktionalität dient es auch dazu, den eigenen Entwicklungsstand in den Bereichen
+
+- objektorientierter Programmaufbau
+- Arbeiten mit Datenbankdateien
+- fachliche Logik in C#
+- nachvollziehbare Projektstruktur
+
+sichtbar zu machen.
 
 ---
 
 ## Hinweis
 
-Die genaue Tabellenstruktur der Benning-Datenbank wird im Projekt noch analysiert.  
-Deshalb kann sich die konkrete SQL-Abfrage im Verlauf der Entwicklung noch ändern.
+Dieses Repository dokumentiert ein laufendes Praxis- und Lernprojekt, das schrittweise weiterentwickelt wird.
 
----
-
-## Perspektivische Erweiterungen
-
-- Filter nach Raum oder Standort
-- Export der Ergebnisse
-- grafische Oberfläche
-- Unterstützung weiterer Auswertungen
+Der aktuelle Schwerpunkt liegt auf dem Einlesen und Verarbeiten von Prüfdaten elektrischer Betriebsmittel sowie auf der Berechnung des Prüfstatus. Die übersichtlichere Darstellung der Ergebnisse folgt im nächsten Entwicklungsschritt.

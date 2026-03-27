@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+
 
 namespace Betriebsmittel.PrueffristenMonitor
 {
@@ -41,9 +41,28 @@ namespace Betriebsmittel.PrueffristenMonitor
             }
 
             Console.WriteLine("Datei gefunden");
-            Console.WriteLine(DeviceRepository.GetDevices(datenPfad));
+
+            List<Device> geraete = DeviceRepository.GetDevices(datenPfad);
+
+            foreach (Device geraet in geraete)
+            {
+                geraet.Status = DeviceStatusService.GetStatus(geraet);
+                Console.WriteLine($"ID: {geraet.Id}, Bezeichnung: {geraet.Bezeichnung}," +
+                $" Abteilung: {geraet.Abteilung}, $ Letzte Prüfung: {geraet.Pruefdatum}" +
+                $" Nächste Prüfung: {geraet.NaechstePruefung}, Status: {geraet.Status}");
+
+                // Console.WriteLine($"ID: {geraet.id}, Bezeichung: {geraet.bezeichnung}," +
+                // $" Abteilung: {geraet.abteilung}, Prüfdatum: {geraet.pruefdatum}," +
+                // $" Nächste Prüfung: {geraet.naechstePruefung}, Prüfintervall: {geraet.pruefintervall}, Status: {geraet.status}");
+            }
+
+
+
+
+
 
         }
+
 
 
 

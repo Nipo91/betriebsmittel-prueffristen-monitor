@@ -67,7 +67,7 @@ Beispiel für Statuswerte:
 - Gültig
 - Bald fällig
 - Überfällig
-- Unbekannt
+- Nicht geprüft
 
 ---
 

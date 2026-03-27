@@ -4,7 +4,12 @@ namespace Betriebsmittel.PrueffristenMonitor
 {
     internal class DeviceRepository
     {
-
+        /// <summary>
+        /// Liest die Gerätedaten aus der Tabelle Geraete der angegebenen SQLite-Datenbank
+        /// und erstellt daraus eine Liste von Device-Objekten.
+        /// </summary>
+        /// <param name="pfad">Pfad zur Benning-Datenbankdatei</param>
+        /// <returns>Liste der eingelesenen Geräte</returns>
         public static List<Device> GetDevices(string pfad)
         {
             // 1. Leere Liste anlegen
@@ -77,9 +82,6 @@ namespace Betriebsmittel.PrueffristenMonitor
                 Console.WriteLine($"Es kam zu einem Fehler: {ex.Message}");
 
             }
-
-
-
 
             return lGeraete;
 

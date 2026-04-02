@@ -29,6 +29,7 @@ namespace Betriebsmittel.PrueffristenMonitor
             Bezeichnung = geraeteBezeichnung;
             Abteilung = geraeteAbteilung;
 
+
             if (geraetePruefdatum.HasValue)
             {
                 Pruefdatum = DateOnly.FromDateTime(geraetePruefdatum.Value);

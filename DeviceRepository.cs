@@ -63,14 +63,18 @@ namespace Betriebsmittel.PrueffristenMonitor
 
                                 int geraetePruefintervall = int.Parse(sgeraetePruefintervall);
 
-                                //Neues Device-Objekt erzeugen und der Liste hinzugefügt
-                                lGeraete.Add(new Device(
-                                    geraeteID,
+                                // Device-Objackt erzeugen 
+                                Device geraet = new Device(geraeteID,
                                     geraeteBezeichnung,
                                     geraeteAbteilung,
                                     geraetePruefdatum,
                                     geraeteDatumNaechstePruefung,
-                                    geraetePruefintervall));
+                                    geraetePruefintervall);
+                                // Stautus Berechnen und im Objeckt speichern
+                                geraet.Status = DeviceStatusService.GetStatus(geraet);
+
+                                //Neues Device-Objekt der Liste hinzugefügt
+                                lGeraete.Add(geraet);
                             }
                         }
                     }

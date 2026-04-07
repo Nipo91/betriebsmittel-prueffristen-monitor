@@ -77,8 +77,8 @@ Aktuell werden folgende Statuswerte verwendet:
 6. Ergebnisse übersichtlich ausgeben  
 7. Fehlerbehandlung und Dokumentation ergänzen  
 
-**Aktueller Stand:** Meilenstein 5 abgeschlossen  
-**Nächster Schritt:** Meilenstein 6 – Ergebnisse übersichtlicher ausgeben
+**Aktueller Stand:** Meilenstein 6 abgeschlossen  
+**Nächster Schritt:** Meilenstein 7 – Fehlerbehandlung und Dokumentation ergänzen  
 
 ---
 

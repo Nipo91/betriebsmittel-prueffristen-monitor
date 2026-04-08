@@ -1,5 +1,8 @@
 namespace Betriebsmittel.PrueffristenMonitor
 {
+    /// <summary>
+    /// Repräsentiert ein elektrisches Betriebsmittel mit den für die Prüfüberwachung relevanten Daten.
+    /// </summary>
     internal class Device
     {
         public string Id { get; private set; }
@@ -10,7 +13,8 @@ namespace Betriebsmittel.PrueffristenMonitor
         public DateOnly? NaechstePruefung { get; private set; }
         public int Pruefintervall { get; private set; }
         /// <summary>
-        /// Speichert den aktuellen Prüfstatus des Geräts. Berechnung in DeviceStatusService.
+        /// Speichert den aktuellen Prüfstatus des Geräts.
+        /// Die Berechnung erfolgt im DeviceStatusService.
         /// </summary>
         public string Status { get; set; } = "";
 
@@ -51,8 +55,7 @@ namespace Betriebsmittel.PrueffristenMonitor
             Pruefintervall = geraetePruefintervall;
 
 
-            //Console.WriteLine(this);
-            //Console.WriteLine($"ID: {id}, Bezeichung: {bezeichnung}, Abteilung: {abteilung}, Prüfdatum: {pruefdatum}, Nächste Prüfung: {naechstePruefung}, Prüfintervall: {pruefintervall}");
+
         }
 
 

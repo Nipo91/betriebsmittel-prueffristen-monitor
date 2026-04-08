@@ -2,6 +2,9 @@ using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
 namespace Betriebsmittel.PrueffristenMonitor
 {
+    /// <summary>
+    /// Stellt Methoden zum Lesen von Gerätedaten aus einer SQLite-Datenbank bereit.
+    /// </summary>
     internal class DeviceRepository
     {
         /// <summary>
@@ -47,21 +50,27 @@ namespace Betriebsmittel.PrueffristenMonitor
 
                                 string sGeraetePruefdatum = device["Geraete_Pruefdatum"].ToString() ?? "";
                                 DateTime? geraetePruefdatum = null;
-                                if (sGeraetePruefdatum != "")
+                                if (DateTime.TryParse(sGeraetePruefdatum, out DateTime gelesenesPruefdatum))
                                 {
-                                    geraetePruefdatum = DateTime.Parse(sGeraetePruefdatum);
+                                    geraetePruefdatum = gelesenesPruefdatum;
                                 }
 
                                 string sGeraeteDatumNaechstePruefung = device["Geraete_Datum_Naechste_Pruefung"].ToString() ?? "";
                                 DateTime? geraeteDatumNaechstePruefung = null;
-                                if (sGeraeteDatumNaechstePruefung != "")
+
+                                if (DateTime.TryParse(sGeraeteDatumNaechstePruefung, out DateTime gelesenesNaechstesPruefdatum))
                                 {
-                                    geraeteDatumNaechstePruefung = DateTime.Parse(sGeraeteDatumNaechstePruefung);
+                                    geraeteDatumNaechstePruefung = gelesenesNaechstesPruefdatum;
                                 }
 
                                 string sgeraetePruefintervall = device["Geraete_Pruefintervall"].ToString() ?? "";
 
-                                int geraetePruefintervall = int.Parse(sgeraetePruefintervall);
+                                int geraetePruefintervall = 0;
+
+                                if (int.TryParse(sgeraetePruefintervall, out int gelesenesPruefintervall))
+                                {
+                                    geraetePruefintervall = gelesenesPruefintervall;
+                                }
 
                                 // Device-Objackt erzeugen 
                                 Device geraet = new Device(geraeteID,
@@ -83,7 +92,7 @@ namespace Betriebsmittel.PrueffristenMonitor
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Es kam zu einem Fehler: {ex.Message}");
+                Console.WriteLine($"Fehler beim Lesen der Gerätedaten aus der Datenbank: {ex.Message}");
 
             }
 

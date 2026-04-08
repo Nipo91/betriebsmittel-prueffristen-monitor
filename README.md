@@ -41,9 +41,9 @@ Der Prüfstatus wird derzeit anhand des Datums der nächsten Prüfung bewertet.
 
 Aktuell werden folgende Statuswerte verwendet:
 
-- `nicht Geprüft`
-- `Prüfung Abgelaufen`
-- `Bald Prüfen`
+- `Nicht geprüft`
+- `Überfällig`
+- `Bald fällig`
 - `Geprüft`
 
 ---
@@ -69,6 +69,8 @@ Aktuell werden folgende Statuswerte verwendet:
 
 ## Entwicklungsstand / Meilensteine
 
+## Entwicklungsstand / Meilensteine
+
 1. Dateipfad zur Datenbank einlesen  
 2. Datenbankverbindung prüfen  
 3. Tabellenstruktur analysieren  
@@ -77,8 +79,7 @@ Aktuell werden folgende Statuswerte verwendet:
 6. Ergebnisse übersichtlich ausgeben  
 7. Fehlerbehandlung und Dokumentation ergänzen  
 
-**Aktueller Stand:** Meilenstein 6 abgeschlossen  
-**Nächster Schritt:** Meilenstein 7 – Fehlerbehandlung und Dokumentation ergänzen  
+**Aktueller Stand:** Meilenstein 7 abgeschlossen
 
 ---
 
@@ -119,4 +120,4 @@ sichtbar zu machen.
 
 Dieses Repository dokumentiert ein laufendes Praxis- und Lernprojekt, das schrittweise weiterentwickelt wird.
 
-Der aktuelle Schwerpunkt liegt auf dem Einlesen und Verarbeiten von Prüfdaten elektrischer Betriebsmittel sowie auf der Berechnung des Prüfstatus. Die übersichtlichere Darstellung der Ergebnisse folgt im nächsten Entwicklungsschritt.
+Aktuell sind die grundlegenden Funktionen zum Einlesen, Verarbeiten und Ausgeben der Gerätedaten sowie eine erste Fehlerbehandlung und Dokumentation umgesetzt.

@@ -1,7 +1,15 @@
 namespace Betriebsmittel.PrueffristenMonitor
 {
+    /// <summary>
+    /// Stellt Methoden für die strukturierte Ausgabe der Geräte- und Prüfdaten in der Konsole bereit.
+    /// </summary>
     internal class ConsoleOutputService
     {
+
+        /// <summary>
+        /// Gibt alle eingelesenen Geräte nach Prüfstatus gruppiert in der Konsole aus.
+        /// </summary>
+        /// <param name="alleDevice">Liste aller eingelesenen Geräte.</param>
         public static void AusgabeGesamt(List<Device> alleDevice)
         {
 
@@ -11,6 +19,11 @@ namespace Betriebsmittel.PrueffristenMonitor
             AusgabeBlock(alleDevice, "Geprüft");
         }
 
+        /// <summary>
+        /// Gibt alle Geräte mit dem angegebenen Prüfstatus in einem eigenen Ausgabeblock in der Konsole aus.
+        /// </summary>
+        /// <param name="alleDevice">Liste aller eingelesenen Geräte.</param>
+        /// <param name="status">Der Prüfstatus, nach dem die Geräte gefiltert und ausgegeben werden.</param>
         private static void AusgabeBlock(List<Device> alleDevice, string status)
         {
             bool statusvorhanden = false;
